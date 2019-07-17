@@ -1,0 +1,19 @@
+{% extends 'front/base.html.twig' %}
+
+{% block body %}
+    <div class="cart">
+        <div class="container">
+            <h2>koszyk</h2>
+        </div>
+
+        <table>
+            {% for item in order.items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+{% endblock %}

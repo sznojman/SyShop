@@ -3,6 +3,7 @@
 namespace App\Repository\Order;
 
 use App\Entity\Order\Order;
+use App\Entity\Order\OrderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -18,7 +19,24 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
-
+	public function findOneById($id): ?OrderInterface
+	{
+		return $this->createQueryBuilder('o')
+		            ->andWhere('o.id = :id')
+		            ->setParameter('id', $id)
+		            ->getQuery()
+		            ->getOneOrNullResult()
+			;
+	}
+	public function findOneByHash($hash): ?OrderInterface
+	{
+		return $this->createQueryBuilder('o')
+		            ->andWhere('o.hash = :hash')
+		            ->setParameter('hash', $hash)
+		            ->getQuery()
+		            ->getOneOrNullResult()
+			;
+	}
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */

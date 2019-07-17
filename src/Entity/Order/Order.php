@@ -2,21 +2,35 @@
 
 namespace App\Entity\Order;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="App\Repository\Order\OrderRepository")
  */
-class Order
+class Order implements OrderInterface
 {
+//    /**
+//     * @ORM\Id()
+//     * @ORM\GeneratedValue(strategy="UUID")
+//     * @ORM\Column(type="guid",length=12)
+//     */
+//    protected $id;
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
     protected $id;
 
+	/**
+	 *
+	 * @ORM\Column(name="hash",type="string",length=12)
+	 */
+	protected $hash;
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Order\Payment")
 	 * @ORM\JoinColumn(name="payment_id", referencedColumnName="id", onDelete="SET NULL")
@@ -29,7 +43,18 @@ class Order
 	 */
     protected $carrier;
 
-    public function getId(): ?int
+	/**
+	 *
+	 * @ORM\OneToMany(targetEntity="App\Entity\Order\OrderItem",mappedBy="order",cascade={"all"},orphanRemoval=true)
+	 */
+	protected $items;
+
+
+	public function __construct() {
+		$this->items = new ArrayCollection();
+	}
+
+	public function getId(): ?int
     {
         return $this->id;
     }
@@ -65,4 +90,32 @@ class Order
 	}
 
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function addItem(OrderItemInterface $item): void
+	{
+		$this->items->add($item);
+
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function removeItem(OrderItemInterface $item): void
+	{
+		$this->items->removeElement($item);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getItems(): ArrayCollection
+	{
+		return $this->items;
+	}
+
+	public function getHash(): ?string {
+		return $this->hash;
+	}
 }

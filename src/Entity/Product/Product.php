@@ -2,12 +2,13 @@
 
 namespace App\Entity\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Product\ProductRepository")
  */
-class Product
+class Product implements ProductInterface
 {
     /**
      * @ORM\Id()
@@ -28,27 +29,57 @@ class Product
 	 */
 	protected $quantity;
 
-    public function getId(): ?int
+
+	/**
+	 *@ORM\OneToMany(targetEntity="App\Entity\Order\OrderItem",mappedBy="product")
+	 */
+	protected $orderItem;
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="name",type="string",length=312, nullable=true)
+	 */
+	protected $name;
+
+	public function getId(): ?int
     {
         return $this->id;
     }
+	public function setId($id)
+	{   $this->id = $id;
 
+	}
 	/**
 	 * @return string
 	 */
-	public function getEan():string {
+	public function getEan(): ?string {
 		return $this->ean;
 	}
 
 	/**
 	 * @param string $ean
-	 * @return self
+	 * @return void
 	 */
-	public function setEan( $ean ): self {
+	public function setEan( $ean ): void {
 		$this->ean = $ean;
-		return $this;
+
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getName(): ?string
+	{
+		return $this->name;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setName(string $name): void
+	{
+		$this->name = $name;
+	}
 	/**
 	 * @return int
 	 */
@@ -58,11 +89,18 @@ class Product
 
 	/**
 	 * @param int $quantity
-	 * @return self
+	 * @return void
 	 */
-	public function setQuantity( int $quantity ): self {
+	public function setQuantity( int $quantity ): void{
 		$this->quantity = $quantity;
-		return $this;
+
 	}
 
+	public function getOrderItem(): ArrayCollection {
+		return $this->orderItem;
+	}
+
+	public function __toString(  ) {
+		return (string)$this->getEan();
+	}
 }
