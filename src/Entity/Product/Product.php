@@ -12,8 +12,8 @@ class Product implements ProductInterface
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
@@ -40,6 +40,12 @@ class Product implements ProductInterface
 	 * @ORM\Column(name="name",type="string",length=312, nullable=true)
 	 */
 	protected $name;
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="price",type="float", nullable=false)
+	 */
+	protected $price = 0;
 
 	public function getId(): ?int
     {
@@ -102,5 +108,13 @@ class Product implements ProductInterface
 
 	public function __toString(  ) {
 		return (string)$this->getEan();
+	}
+
+	public function getPrice(): float {
+		return $this->price;
+	}
+
+	public function setPrice($price): void {
+		$this->price = $price;
 	}
 }

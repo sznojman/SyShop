@@ -6,28 +6,27 @@ use App\Entity\Product\ProductInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ *
  * @ORM\Entity(repositoryClass="App\Repository\Order\OrderItemRepository")
  */
 class OrderItem implements OrderItemInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-
+	/**
+	 * @ORM\Id()
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue()
+	 */
+	protected $id;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Order\Order", inversedBy="items")
 	 * @ORM\JoinColumn(name="order_id", referencedColumnName="id",onDelete="CASCADE",nullable=false)
 	 */
-    private $order;
+	protected $order;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Product\Product",inversedBy="orderItem")
-	 * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Product\Product")
+	 * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
 	 */
     protected $product;
 
@@ -35,6 +34,14 @@ class OrderItem implements OrderItemInterface
 	 * @ORM\Column(type="integer")
 	 */
     protected $quantity;
+
+
+	/**
+	 * @var float
+	 * @ORM\Column(name="priceTotal", type="float")
+	 */
+	private $priceTotal = 0;
+
 
     public function getId(): ?int
     {
@@ -85,4 +92,22 @@ class OrderItem implements OrderItemInterface
 		$this->product = $product;
 	}
 
+	public function setId( $id )
+	{
+		$this->id = $id;
+	}
+
+	/**
+	 * @param float $priceTotal
+	 */
+	public function setPriceTotal( float $priceTotal ): void {
+		$this->priceTotal = $priceTotal;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getPriceTotal(): float {
+		return $this->priceTotal;
+	}
 }

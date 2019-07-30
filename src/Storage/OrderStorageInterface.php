@@ -18,7 +18,7 @@ interface OrderStorageInterface {
 
 	public function remove(): void ;
 
-//	public function getOrderById(): ?OrderInterface ;
+	public function getOrderById(): ?OrderInterface ;
 
 	public function getOrderByHash(): ?OrderInterface ;
 }

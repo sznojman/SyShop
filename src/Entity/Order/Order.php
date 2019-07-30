@@ -13,22 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order implements OrderInterface
 {
-//    /**
-//     * @ORM\Id()
-//     * @ORM\GeneratedValue(strategy="UUID")
-//     * @ORM\Column(type="guid",length=12)
-//     */
-//    protected $id;
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+
+	/**
+	 * @ORM\Id()
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
     protected $id;
 
 	/**
 	 *
-	 * @ORM\Column(name="hash",type="string",length=12)
+	 * @ORM\Column(name="hash",type="string",length=12,nullable=true)
 	 */
 	protected $hash;
 	/**
@@ -48,6 +43,12 @@ class Order implements OrderInterface
 	 * @ORM\OneToMany(targetEntity="App\Entity\Order\OrderItem",mappedBy="order",cascade={"all"},orphanRemoval=true)
 	 */
 	protected $items;
+
+	/**
+	 * @var string
+	 * @ORM\Column(name="totalCost",type="float", nullable=true)
+	 */
+	protected $totalCost = 0;
 
 
 	public function __construct() {
@@ -110,12 +111,23 @@ class Order implements OrderInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getItems(): ArrayCollection
+	public function getItems(): Collection
 	{
 		return $this->items;
 	}
 
 	public function getHash(): ?string {
 		return $this->hash;
+	}
+	public function setHash($hash): void  {
+		$this->hash = $hash;
+	}
+
+	public function setTotalCost( $price ): void {
+		$this->totalCost = $price;
+	}
+
+	public function getTotalCost(): float {
+		return $this->totalCost;
 	}
 }

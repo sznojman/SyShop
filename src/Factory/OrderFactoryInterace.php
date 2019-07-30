@@ -13,6 +13,7 @@ use App\Entity\Order\OrderInterface;
 use App\Entity\Order\OrderItemInterface;
 use App\Entity\Product\ProductInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 interface OrderFactoryInterace {
 	/**
@@ -108,5 +109,5 @@ interface OrderFactoryInterace {
 	 *
 	 * @return Collection
 	 */
-	public function items(): ArrayCollection ;
+	public function items(): Collection ;
 }

@@ -40,5 +40,15 @@ interface OrderItemInterface {
 	 */
 	public function getProduct(): ProductInterface ;
 
+	/**
+	 * @param float $priceTotal
+	 */
+	public function setPriceTotal(float $priceTotal): void ;
+
+	/**
+	 * @return float
+	 */
+	public function getPriceTotal(): float ;
+
 
 }

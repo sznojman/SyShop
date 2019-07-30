@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 interface ProductInterface {
 
-
 	public function getId(): ?int;
 
 	/**
@@ -24,8 +23,6 @@ interface ProductInterface {
 	 * @return void
 	 */
 	public function setEan( $ean ): void ;
-
-
 
 	public function setName(string $name):void ;
 
@@ -41,7 +38,9 @@ interface ProductInterface {
 	 */
 	public function setQuantity( int $quantity ): void;
 
-
-
 	public function getOrderItem(): ArrayCollection ;
+
+	public function getPrice():float;
+
+	public function setPrice($price): void;
 }

@@ -8,6 +8,7 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Order\OrderItem;
 use App\Entity\Product\Product;
 use App\Factory\OrderFactory;
 use App\Storage\OrderSessionStorage;
@@ -20,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Order\Order;
 use App\Entity\Order\OrderInterface;
 use App\Form\Cart\AddItemType;
+use App\Form\Cart\RemoveItemType;
 class OrderController extends AbstractController{
 
 
@@ -75,19 +77,35 @@ class OrderController extends AbstractController{
 	 */
 	public function addItem(Request $request, Product $product): Response
 	{
-		dump($product);
+
 		$form = $this->createForm(AddItemType::class, $product);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			dump($this->orderFactory);
+
 			$this->orderFactory->addItem($product, 1);
 			$this->addFlash('success', 'dodano do koszyka');
 		}
 
 		return $this->redirectToRoute('cart');
 	}
+	/**
+	 * @Route("/cart/removeItem/{id}", name="cart.removeItem", methods={"POST"})
+	 */
+	public function removeItem(Request $request,  OrderItem $product): Response
+	{
 
+		$form = $this->createForm(RemoveItemType::class, $product);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$this->orderFactory->removeItem($product);
+			$this->addFlash('success', 'usunięto z koszyka');
+		}
+
+		return $this->redirectToRoute('cart');
+	}
 
 	/**
 	 * @param Product $product
@@ -102,4 +120,19 @@ class OrderController extends AbstractController{
 			'form' => $form->createView()
 		]);
 	}
+
+	/**
+	 * @param Product $product
+	 *
+	 * @return Response
+	 */
+	public function removeItemForm(OrderItem $product): Response
+	{
+		$form = $this->createForm(RemoveItemType::class, $product);
+
+		return $this->render('front/order/_removeItem_form.html.twig', [
+			'form' => $form->createView()
+		]);
+	}
+
 }

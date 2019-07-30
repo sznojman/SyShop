@@ -16,6 +16,7 @@ class AppFixtures extends Fixture
 			$product->setEan('ean'.$i);
 			$product->setName('nazwa produktu '.$i);
 			$product->setQuantity($i*4);
+			$product->setPrice($i*2.33+1);
 			$manager->persist($product);
 		}
         $manager->flush();

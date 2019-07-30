@@ -1,19 +1,29 @@
-{% extends 'front/base.html.twig' %}
+{% extends 'front/layout.html.twig' %}
 
 {% block body %}
+
     <div class="cart">
         <div class="container">
             <h2>koszyk</h2>
+
+
+            <table class="table">
+                {% for item in order.items %}
+                    {{ dump(item) }}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ render(controller('App\\Controller\\Front\\OrderController::removeItemForm', {'id' : item.id})) }}</td>
+                        <td>{{ item.priceTotal }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">{{ order.current.totalCost }}</div>
+            </div>
+
         </div>
-
-        <table>
-            {% for item in order.items %}
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.name }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-
     </div>
 {% endblock %}

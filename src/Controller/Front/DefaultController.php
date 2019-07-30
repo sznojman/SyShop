@@ -26,7 +26,7 @@ class DefaultController extends AbstractController {
 		$form = $this->createForm(OrderItemFormType::class);
 		$products = $em->getRepository(Product::class)->findAll();
 
-		return $this->render('front/index.html.twig',[
+		return $this->render('front/default/index.html.twig',[
 			'products' => $products,
 			'form' => $form->createView()
 		]);

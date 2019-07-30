@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OrderSessionStorage implements OrderStorageInterface {
 
-	private const ORDER_KEY_NAME = 'orderId';
+	private const ORDER_KEY_NAME = 'orderHash';
 
 	/**
 	 * @var EntityManagerInterface
@@ -48,6 +48,15 @@ class OrderSessionStorage implements OrderStorageInterface {
 
 	public function remove(): void {
 		$this->session->remove(self::ORDER_KEY_NAME);
+	}
+
+	public function getOrderById(): ?OrderInterface {
+
+		if ($this->has()) {
+			$order = $this->entityManager->getRepository(Order::class)->findOneById($this->get());
+			return $order;
+		}
+		return null;
 	}
 
 	public function getOrderByHash(): ?OrderInterface {

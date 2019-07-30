@@ -14,6 +14,7 @@ use App\Entity\Order\OrderInterface;
 use App\Entity\Order\OrderItem;
 use App\Entity\Order\OrderItemInterface;
 use App\Entity\Product\ProductInterface;
+use App\Service\Order\OrderService;
 use App\Storage\OrderSessionStorage;
 use App\Storage\OrderStorageInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -43,13 +44,23 @@ class OrderFactory implements OrderFactoryInterace {
 	 * @var EventDispatcherInterface
 	 */
 	private $eventDispatcher;
+	/**
+	 * @var EventDispatcherInterface
+	 */
+	private $os;
 
-	public function __construct(OrderSessionStorage $storage, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
+	public function __construct(
+		OrderSessionStorage $storage,
+		EntityManagerInterface $entityManager,
+		EventDispatcherInterface $eventDispatcher,
+		OrderService $os
+	)
 	{
 		$this->storage = $storage;
 		$this->entityManager = $entityManager;
 		$this->eventDispatcher = $eventDispatcher;
 		$this->order = $this->getCurrent();
+		$this->os = $os;
 	}
 
 
@@ -85,8 +96,10 @@ class OrderFactory implements OrderFactoryInterace {
 	 */
 	public function containsProduct( ProductInterface $product ): bool {
 
+
 			foreach ( $this->order->getItems() as $item ) {
-				if($product === $item){
+
+				if($product === $item->getProduct()){
 					return true;
 				}
 			}
@@ -127,16 +140,14 @@ class OrderFactory implements OrderFactoryInterace {
 	 */
 	public function addItem( ProductInterface $product, int $quantity ): void {
 		$orderBeforeId = $this->order->getId();
-		dump($orderBeforeId);
 
 		if (!$this->containsProduct($product)) {
 			$orderItem = new OrderItem();
 			$orderItem->setOrder($this->order);
 			$orderItem->setProduct($product);
 			$orderItem->setQuantity($quantity);
-
 			$this->order->addItem($orderItem);
-//			$this->entityManager->persist($orderItem);
+
 		} else {
 			$key = $this->indexOfProduct($product);
 			$item = $this->order->getItems()->get($key);
@@ -145,20 +156,15 @@ class OrderFactory implements OrderFactoryInterace {
 		}
 
 		$this->entityManager->persist($this->order);
-		dump($this->order);
-		dump($this->order->getHash());
-		// Run events
+
 		// Run events
 		if ($orderBeforeId === null) {
 			$event = new GenericEvent($this->order);
-			dump($event);
 			$this->eventDispatcher->dispatch(Events::ORDER_CREATED, $event);
 		} else {
 			$event = new GenericEvent($this->order);
 			$this->eventDispatcher->dispatch(Events::ORDER_UPDATED, $event);
 		}
-		die('OrderIdSaveInSessionSubscriber');
-
 
 		$this->entityManager->flush();
 
@@ -249,7 +255,7 @@ class OrderFactory implements OrderFactoryInterace {
 	 *
 	 * @return Collection
 	 */
-	public function items(): ArrayCollection {
+	public function items(): Collection {
 		return $this->order->getItems();
 	}
 }

@@ -8,17 +8,14 @@
 
 namespace App\Entity\Order;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 interface OrderInterface {
 
 	public function getId(): ?int;
 	public function getHash(): ?string ;
-
-
-
-
+	public function setHash($hash): void;
 	public function getPayment();
-
 	public function setPayment( $payment );
 	public function getCarrier() ;
 	public function setCarrier($carrier);
@@ -35,8 +32,11 @@ interface OrderInterface {
 	/**
 	 * @return ArrayCollection
 	 */
-	public function getItems(): ArrayCollection;
+	public function getItems(): Collection;
 
 
+	public function setTotalCost($price): void;
+
+	public function getTotalCost(): float ;
 
 }
