@@ -22,8 +22,12 @@
 
 !/public/build/assets/css/app.*.css
 !/public/build/assets/app.*.js
-/public/build/
+
+
+
+/public/build/dev
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 cleardb.sh
+!/public/build/assets/
