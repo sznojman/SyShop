@@ -258,4 +258,15 @@ class OrderFactory implements OrderFactoryInterace {
 	public function items(): Collection {
 		return $this->order->getItems();
 	}
+
+	public function getOrderItemsCount(): int {
+		// TODO: Implement getOrderItemsCount() method.
+		$count = 0;
+		/** @var OrderItem $item */
+		foreach ($this->items() as $item){
+			$count += $item->getQuantity();
+		}
+
+		return $count;
+	}
 }

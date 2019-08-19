@@ -11,6 +11,8 @@ namespace App\Controller\Front;
 use App\Entity\Order\OrderItem;
 use App\Entity\Product\Product;
 use App\Factory\OrderFactory;
+use App\Form\Order\SetCarrierType;
+use App\Form\Order\SetPaymentType;
 use App\Storage\OrderSessionStorage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,10 +50,13 @@ class OrderController extends AbstractController{
 	 */
 	public function cart( Request $request ,OrderFactory $order) {
 
-
-
+		$carrierForm = $this->createForm(SetCarrierType::class,$order->getCurrent());
+		$paymentForm = $this->createForm(SetPaymentType::class,$order->getCurrent());
+		dump($order->getOrderItemsCount());
 		return $this->render('front/order/cart.html.twig',[
-			'order' => $order
+			'order' => $order,
+			'carrierForm' => $carrierForm->createView(),
+			'paymentForm' => $paymentForm->createView()
 		]);
 	}
 

@@ -110,4 +110,7 @@ interface OrderFactoryInterace {
 	 * @return Collection
 	 */
 	public function items(): Collection ;
+
+
+	public function getOrderItemsCount(): int;
 }

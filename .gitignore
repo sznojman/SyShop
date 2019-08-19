@@ -19,11 +19,7 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-
-!/public/build/assets/css/app.*.css
-!/public/build/assets/app.*.js
-
-
+public/upload/*
 
 /public/build/dev
 npm-debug.log

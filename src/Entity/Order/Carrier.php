@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Order\CarrierRepository")
  */
-class Carrier
+class Carrier implements CarrierInterface
 {
     /**
      * @ORM\Id()
@@ -17,9 +17,14 @@ class Carrier
     protected $id;
 
 	/**
-	 * @ORM\Column(name="name",type="string",length=255, nullable=true)
+	 * @ORM\Column(name="name",type="string",length=255, nullable=false)
 	 */
 	protected $name;
+	/**
+	 * @var float
+	 * @ORM\Column(name="cost", type="float")
+	 */
+	protected $cost;
 
     public function getId(): ?int
     {
@@ -29,7 +34,7 @@ class Carrier
 	/**
 	 * @return mixed
 	 */
-	public function getName() {
+	public function getName():?string{
 		return $this->name;
 	}
 
@@ -37,9 +42,22 @@ class Carrier
 	 * @param mixed $name
 	 * @return self
 	 */
-	public function setName( $name ): self {
+	public function setName( $name ): void {
 		$this->name = $name;
-		return $this;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getCost(): float {
+		return $this->cost;
+	}
+
+	/**
+	 * @param float $cost
+	 */
+	public function setCost( float $cost ): void {
+		$this->cost = $cost;
 	}
 
 

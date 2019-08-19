@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Order\PaymentRepository")
  */
-class Payment
+class Payment implements PaymentInterface
 {
     /**
      * @ORM\Id()
@@ -17,7 +17,7 @@ class Payment
     protected $id;
 
 	/**
-	 * @ORM\Column(name="name",type="string",length=255, nullable=true)
+	 * @ORM\Column(name="name",type="string",length=255, nullable=false)
 	 */
 	protected $name;
 
@@ -29,16 +29,15 @@ class Payment
 	/**
 	 * @return mixed
 	 */
-	public function getName() {
+	public function getName(): ?string {
 		return $this->name;
 	}
 
 	/**
 	 * @param mixed $name
-	 * @return self
+	 * @return void
 	 */
-	public function setName( $name ): self {
+	public function setName(string $name ): void {
 		$this->name = $name;
-		return $this;
 	}
 }

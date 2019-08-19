@@ -11,9 +11,12 @@
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 const $ = require('jquery');
 import "../../node_modules/bootstrap/dist/js/bootstrap.min";
+import "../../node_modules/bootstrap/dist/js/bootstrap.min";
+// const Routing = require('../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js');
+
 
 
 $(function () {
-    console.log('jquery');
+
 });
 
