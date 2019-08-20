@@ -12,7 +12,7 @@
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
+.idea/*
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
@@ -27,3 +27,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 cleardb.sh
 !/public/build/assets/
+/.env

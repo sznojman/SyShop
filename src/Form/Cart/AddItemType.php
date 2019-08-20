@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sznojman
- * Date: 15.07.19
- * Time: 18:07
- */
 
 namespace App\Form\Cart;
 use App\Entity\Product\Product;
