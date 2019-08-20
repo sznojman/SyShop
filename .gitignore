@@ -27,4 +27,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 cleardb.sh
 !/public/build/assets/
-/.env
+.env
