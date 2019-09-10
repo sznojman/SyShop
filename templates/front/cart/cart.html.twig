@@ -1,0 +1,38 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block body %}
+
+    <div class="cart">
+        <div class="container">
+            <h2>koszyk</h2>
+            <table class="table">
+                {% for item in order.items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ render(controller('App\\Controller\\Front\\CartController::removeItemForm', {'id' : item.id})) }}</td>
+                        <td>{{ item.priceTotal }}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+            <div class="summaryCost">
+
+                <div>{{ order.current.totalCost }}</div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h3>Metody przesyłki</h3>
+                    {{ form_start(carrierForm) }}
+                    {{ form_end(carrierForm) }}
+                </div>
+                <div class="col-6">
+                    <h3>Metody płatności</h3>
+                    {{ form_start(paymentForm) }}
+                    {{ form_end(paymentForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

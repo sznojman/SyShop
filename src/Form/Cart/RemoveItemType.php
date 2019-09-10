@@ -3,7 +3,7 @@
 
 namespace App\Form\Cart;
 
-use App\Entity\Order\OrderItem;
+use App\Entity\Cart\CartItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -47,7 +47,7 @@ class RemoveItemType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => OrderItem::class,
+			'data_class' => CartItem::class,
 		));
 	}
 }

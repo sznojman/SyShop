@@ -38,7 +38,7 @@ interface ProductInterface {
 	 */
 	public function setQuantity( int $quantity ): void;
 
-	public function getOrderItem(): ArrayCollection ;
+	public function getCartItem(): ArrayCollection ;
 
 	public function getPrice():float;
 

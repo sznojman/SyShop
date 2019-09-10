@@ -1,0 +1,9 @@
+
+{% macro product_box(product) %}
+    <div class="product-box">
+        <h1 class="product-name"><a href="{{ path('singleProduct',{'id':product.id}) }}">{{ product.name }}</a></h1>
+        <span class="product-price"> {{ product.price }}</span>
+        {{ render(controller('App\\Controller\\Front\\CartController::addItemForm', {'id' : product.id})) }}
+
+    </div>
+{% endmacro %}

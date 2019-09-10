@@ -31,7 +31,7 @@ class Product implements ProductInterface
 
 
 	/**
-	 *@ORM\OneToMany(targetEntity="App\Entity\Order\OrderItem",mappedBy="product")
+	 *@ORM\OneToMany(targetEntity="App\Entity\Cart\CartItem",mappedBy="product")
 	 */
 	protected $orderItem;
 
@@ -102,7 +102,7 @@ class Product implements ProductInterface
 
 	}
 
-	public function getOrderItem(): ArrayCollection {
+	public function getCartItem(): ArrayCollection {
 		return $this->orderItem;
 	}
 

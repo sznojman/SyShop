@@ -1,5 +1,5 @@
 {% extends 'front/layout.html.twig' %}
-
+{% import 'front/product/macro/product_box.html.twig' as macro %}
 {% block body %}
     <div class="container">
         <div class="index">
@@ -8,14 +8,7 @@
 
             <ul>
                 {% for p in products %}
-                    {#{{ form_start(form,'ss',{'product'}) }}#}
-                     <li>
-                         <div>{{ p.name }} {{ p.price }}</div>
-                         {{ render(controller('App\\Controller\\Front\\OrderController::addItemForm', {'id' : p.id})) }}
-                     </li>
-
-
-                    {#{{ form_end() }}#}
+                    {{ macro.product_box(p) }}
                 {% endfor %}
             </ul>
 
