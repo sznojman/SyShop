@@ -12,11 +12,15 @@
 const $ = require('jquery');
 import "../../node_modules/bootstrap/dist/js/bootstrap.min";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min";
+import "cart"
 // const Routing = require('../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js');
 
 
 
 $(function () {
+
+    cart.addToCart(33);
+
 
 });
 

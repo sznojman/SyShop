@@ -10,9 +10,6 @@
     "css/app": {
       "js": [
         "/build/runtime.js"
-      ],
-      "css": [
-        "/build/css/app.css"
       ]
     }
   }

@@ -189,7 +189,7 @@ class CartFactory implements CartFactoryInterace {
 
 			// Run events
 			$event = new GenericEvent($this->Cart);
-			$this->eventDispatcher->dispatch(Events::Cart_UPDATED, $event);
+			$this->eventDispatcher->dispatch(Events::CART_UPDATED, $event);
 
 			$this->entityManager->persist($this->Cart);
 			$this->entityManager->flush();
