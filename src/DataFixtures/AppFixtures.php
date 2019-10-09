@@ -5,12 +5,23 @@ namespace App\DataFixtures;
 use App\Entity\Cart\Carrier;
 use App\Entity\Cart\CartStatus;
 use App\Entity\Cart\Payment;
+use App\Entity\Customer\Customer;
+use App\Entity\Employe\Employe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Product\Product;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+	private $passwordEncoder;
+
+	public function __construct(UserPasswordEncoderInterface $passwordEncoder){
+		$this->passwordEncoder = $passwordEncoder;
+	}
+
+
     public function load(ObjectManager $manager)
     {
 
@@ -66,6 +77,18 @@ class AppFixtures extends Fixture
 	    $stat7 = new CartStatus();
 	    $stat7->setName('Wstrzymane');
 	    $manager->persist($stat7);
+
+	    $empoye = new Employe();
+	    $empoye->setEmail('sznojman@gmail.com');
+	    $empoye->setRoles(['ROLE_ADMIN']);
+	    $empoye->setPassword($this->passwordEncoder->encodePassword($empoye,'pass'));
+	    $manager->persist($empoye);
+
+	    $customer = new Customer();
+	    $customer->setEmail('mail@test.test');
+	    $customer->setRoles(['ROLE_USER']);
+	    $customer->setPassword($this->passwordEncoder->encodePassword($customer,'pass'));
+	    $manager->persist($customer);
 
 
         $manager->flush();

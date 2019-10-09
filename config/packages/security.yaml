@@ -1,22 +1,52 @@
 security:
     encoders:
-        App\Entity\Customer:
+        App\Entity\Customer\Customer:
+            algorithm: argon2i
+        App\Entity\Employe\Employe:
             algorithm: argon2i
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        user:
+            entity:
+                class: App\Entity\Employe\Employe
+                property: email
+        customer:
             entity:
                 class: App\Entity\Customer\Customer
                 property: email
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: true
-
+        user:
+            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: user
+            form_login:
+                login_path: admin_login
+                check_path: admin_login
+            logout:
+                path:   admin_logout
+                target: /
+            guard:
+                authenticators:
+                    - App\Security\LoginEmployeFormAuthenticator
+        customer:
+            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: user
+            form_login:
+                login_path: customer_login
+                check_path: customer_login
+            logout:
+                path:   customer_logout
+                target: /
+            guard:
+                authenticators:
+                    - App\Security\LoginCustomerFormAuthenticator
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -26,5 +56,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin_login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/customer_login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/panel, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profile, roles: ROLE_USER }

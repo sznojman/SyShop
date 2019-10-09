@@ -1,15 +1,33 @@
 {
   "entrypoints": {
-    "app": {
+    "front": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors~app.js",
-        "/build/app.js"
+        "/build/vendors~admin~front.js",
+        "/build/front.js"
       ]
     },
-    "css/app": {
+    "admin": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors~admin~front.js",
+        "/build/admin.js"
+      ]
+    },
+    "css/front": {
       "js": [
         "/build/runtime.js"
+      ],
+      "css": [
+        "/build/css/front.css"
+      ]
+    },
+    "css/admin": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/css/admin.css"
       ]
     }
   }

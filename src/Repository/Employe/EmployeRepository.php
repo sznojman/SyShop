@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Repository\Customer;
+namespace App\Repository\Employe;
 
-use App\Entity\Customer\Customer;
+use App\Entity\Employe\Employe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Customer|null find($id, $lockMode = null, $lockVersion = null)
- * @method Customer|null findOneBy(array $criteria, array $orderBy = null)
- * @method Customer[]    findAll()
- * @method Customer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Employe|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Employe|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Employe[]    findAll()
+ * @method Employe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CustomerRepository extends ServiceEntityRepository
+class EmployeRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Customer::class);
+        parent::__construct($registry, Employe::class);
     }
+
 
 	public function loadUserByUsername($usernameOrEmail)
 	{
@@ -28,15 +29,15 @@ class CustomerRepository extends ServiceEntityRepository
 		            ->getOneOrNullResult();
 	}
     // /**
-    //  * @return Customer[] Returns an array of Customer objects
+    //  * @return Employe[] Returns an array of Employe objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -45,10 +46,10 @@ class CustomerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Customer
+    public function findOneBySomeField($value): ?Employe
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

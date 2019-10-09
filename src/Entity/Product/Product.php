@@ -3,6 +3,7 @@
 namespace App\Entity\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,20 @@ class Product implements ProductInterface
 	 * @ORM\Column(name="price",type="float", nullable=false)
 	 */
 	protected $price = 0;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="App\Entity\Product\ProductImage")
+	 * @ORM\JoinTable(name="product_images",
+	 *  joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+	 *  inverseJoinColumns={@ORM\JoinColumn(name="product_images", referencedColumnName="id", unique=true)}
+	 * )
+	 */
+	protected $images;
+
+	public function __construct() {
+		$this->images = new ArrayCollection();
+	}
 
 	public function getId(): ?int
     {

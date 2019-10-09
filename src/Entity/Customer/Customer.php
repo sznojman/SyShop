@@ -15,23 +15,23 @@ class Customer implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+	protected $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+	protected $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+	protected $password;
 
     public function getId(): ?int
     {
